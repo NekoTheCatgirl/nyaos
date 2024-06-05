@@ -1,8 +1,4 @@
-use core::fmt;
-use lazy_static::lazy_static;
-use volatile::Volatile;
-use spin::Mutex;
-
+use {core::fmt, lazy_static::lazy_static, spin::Mutex, volatile::Volatile};
 
 #[allow(dead_code)]
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -78,7 +74,7 @@ impl Writer {
             }
         }
     }
-    
+
     pub fn write_string(&mut self, s: &str) {
         for byte in s.bytes() {
             match byte {
@@ -87,7 +83,6 @@ impl Writer {
                 // not part of printable ASCII range
                 _ => self.write_byte(0xfe),
             }
-
         }
     }
 
@@ -129,18 +124,22 @@ lazy_static! {
 }
 
 #[macro_export]
-macro_rules! print {
+macro_rules! std_print {
     ($($arg:tt)*) => ($crate::io::stdout::_print(format_args!($($arg)*)));
 }
 
 #[macro_export]
-macro_rules! println {
-    () => ($crate::print!("\n"));
-    ($($arg:tt)*) => ($crate::print!("{}\n", format_args!($($arg)*)));
+macro_rules! std_println {
+    () => ($crate::std_print!("\n"));
+    ($($arg:tt)*) => ($crate::std_print!("{}\n", format_args!($($arg)*)));
 }
 
 #[doc(hidden)]
 pub fn _print(args: fmt::Arguments) {
     use core::fmt::Write;
-    WRITER.lock().write_fmt(args).unwrap();
+    use x86_64::instructions::interrupts;   // new
+
+    interrupts::without_interrupts(|| {     // new
+        WRITER.lock().write_fmt(args).unwrap();
+    });
 }
