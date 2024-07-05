@@ -1,5 +1,5 @@
 # Nyaos
-A project revolving around building an operating system from scratch. Built entirely with Rust!
+A project revolving around building an operating system from scratch. Built entirely with Rust! (With a tiny bit of assembly)
 
 ## Build from Source
 
