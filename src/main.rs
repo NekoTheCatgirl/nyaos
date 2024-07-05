@@ -3,6 +3,8 @@
 #![feature(abi_x86_interrupt)]
 #![feature(const_mut_refs)]
 
+mod allocators;
+
 extern crate alloc;
 
 use core::panic::PanicInfo;

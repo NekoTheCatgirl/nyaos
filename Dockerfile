@@ -1,6 +1,6 @@
 FROM archlinux:latest
 
-RUN pacman -Syu xorriso rustup nasm make --noconfirm
+RUN pacman -Syu xorriso rustup nasm make clang --noconfirm
 
 RUN rustup default nightly
 
