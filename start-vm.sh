@@ -1,3 +1,3 @@
 #!/bin/bash
 docker build . -t nyaos
-docker run --rm -v $PWD:/home/builder nyaos
+docker run --rm -v $PWD:/root/env nyaos
