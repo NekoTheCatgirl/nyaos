@@ -27,35 +27,47 @@ check_multiboot:
     jmp error
 
 check_cpuid:
+    ; Save original flags
     pushfd
     pop eax
     mov ecx, eax
-    xor eax, 1 << 21
+
+    ; Toggle CPUID bit and check again
+    xor eax, 1 << 21  ; Toggle CPUID bit (bit 21)
     push eax
     popfd
+
+    ; Retrieve flags after toggling CPUID bit
     pushfd
     pop eax
+
+    ; Compare flags to verify CPUID bit affected
     push ecx
     popfd
     cmp eax, ecx
-    je .no_cpuid
+    je .no_cpuid  ; If flags are unchanged, CPUID not supported
+
     ret
+
 .no_cpuid:
     mov al, "C"
     jmp error
 
 check_long_mode:
-    mov eax, 0x8000000
+    ; Check if extended CPUID is supported
+    mov eax, 0x80000000  ; Check for extended functions
     cpuid
-    cmp eax, 0x8000001
-    jb .no_long_mode
-    
-    mov eax, 0x80000001
+    cmp eax, 0x80000001  ; Ensure extended functions are supported
+    jb .no_long_mode  ; If not supported, skip long mode check
+
+    ; Check if long mode (bit 29 in EDX) is supported
+    mov eax, 0x80000001  ; Check extended feature bits
     cpuid
-    test edx, 1 << 29
-    jz .no_long_mode
+    test edx, 1 << 29  ; Check for long mode support (bit 29 in EDX)
+    jz .no_long_mode  ; If bit is not set, long mode not supported
 
     ret
+    
 .no_long_mode:
     mov al, "L"
     jmp error
