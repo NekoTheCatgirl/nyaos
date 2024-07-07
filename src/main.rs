@@ -4,6 +4,7 @@
 #![feature(const_mut_refs)]
 
 mod allocators;
+mod sh;
 
 extern crate alloc;
 
