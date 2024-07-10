@@ -27,7 +27,7 @@ RUN rustup default nightly
 RUN rustup target add x86_64-unknown-none
 
 # Add your script
-COPY make.sh /usr/local/bin/make.sh
+COPY ./build-tools/make.sh /usr/local/bin/make.sh
 RUN chmod +x /usr/local/bin/make.sh
 
 # Run the shell script when the container starts

@@ -6,7 +6,7 @@ x86_64_asm_object_files := $(patsubst asm-src/%.asm, build-artifacts/%.o, $(x86_
 $(x86_64_asm_object_files): build-artifacts/%.o : asm-src/%.asm
 	nasm -f elf64 $(patsubst build-artifacts/%.o, asm-src/%.asm, $@) -o $@
 
-x86_64_rust_object_files := $(shell find target/x86_64-unknown-none/debug/ -name nyaos-*.o)
+x86_64_rust_object_files := $(shell find target/x86_64-nyaos-none/debug/ -name libnyaos.a)
 
 prepare:
 	@echo "Preparing directories"
@@ -16,11 +16,11 @@ prepare:
 
 build: $(x86_64_asm_object_files)
 	@echo "Building"
-	cargo rustc --target=x86_64-unknown-none -- --emit=obj
+	cargo rustc --target=x86_64-nyaos-none.json -- --emit=obj
 
 link:
 	@echo "Linking..."
-	x86_64-elf-ld -n -o build-artifacts/kernel.bin -T targets/x86_64/linker.ld $(x86_64_asm_object_files) $(x86_64_rust_object_files)
+	ld -n --gc-sections -o build-artifacts/kernel.bin -T targets/x86_64/linker.ld $(x86_64_asm_object_files) $(x86_64_rust_object_files)
 
 finish:
 	@echo "Finishing up, moving files into the right areas!"

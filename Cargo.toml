@@ -3,7 +3,8 @@ name = "nyaos"
 version = "0.1.0"
 edition = "2021"
 
-[[bin]]
+[lib]
+crate-type = ["staticlib"]
 name = "nyaos"
 test = false
 bench = false
