@@ -5,6 +5,7 @@
 
 mod allocators;
 mod sh;
+mod mem;
 
 extern crate alloc;
 
@@ -18,3 +19,9 @@ fn panic(_info: &PanicInfo) -> ! {
     }
 }
 
+#[no_mangle]
+pub extern "C" fn kernel_main() -> ! {
+    loop {
+        
+    }
+}

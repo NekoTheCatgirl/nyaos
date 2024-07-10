@@ -10,6 +10,33 @@ SECTIONS
 
     .text :
     {
-        *(.text)
+        *(.text._start)
+        *(.text*)
+    }
+
+    .eh_frame :
+    {
+        *(.eh_frame*)
+    }
+
+    .note : 
+    {
+        *(.note*)
+    }
+
+    .rodata :
+    {
+        *(.rodata*)
+    }
+
+    .data :
+    {
+        *(.data*)
+    }
+
+    .bss :
+    {
+        *(.bss*)
+        *(COMMON)
     }
 }

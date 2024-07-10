@@ -7,6 +7,3 @@ edition = "2021"
 name = "nyaos"
 test = false
 bench = false
-
-[dependencies]
-

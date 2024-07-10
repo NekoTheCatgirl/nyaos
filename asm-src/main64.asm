@@ -1,5 +1,5 @@
 global long_mode_start
-; extern kernel_main dont import yet, we dont have the kernel_main
+extern kernel_main
 
 section .text
 bits 64
@@ -12,7 +12,9 @@ long_mode_start:
     mov fs, ax
     mov gs, ax
 
-    ; Print 'OK'
-    mov dword [0xb8000], 0x2f4b2f4f
+    ; Print 'OK' - Old code, keeping it for now as a stable memory while i work on the rust kernel
+    ; mov dword [0xb8000], 0x2f4b2f4f
+
+    call kernel_main
 
     hlt
