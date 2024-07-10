@@ -31,3 +31,4 @@ cleanup:
 	@echo "Cleaning up build artifacts"
 	cargo clean
 	rm -rf ./build-artifacts
+	rm -rf ./targets/x86_64/iso/boot/kernel.bin
