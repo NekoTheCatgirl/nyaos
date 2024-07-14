@@ -8,3 +8,15 @@ crate-type = ["staticlib"]
 name = "nyaos"
 test = false
 bench = false
+
+[features]
+default = ["testing-kernel"]
+testing-kernel = []
+
+[dependencies]
+linked_list_allocator = "0.10.5"
+multiboot2 = "0.16.0"
+rlibc = "1.0.0"
+spin = "0.9.8"
+volatile = "0.1"
+x86_64 = "0.15.1"
