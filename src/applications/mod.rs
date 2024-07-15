@@ -1,1 +1,0 @@
-//! This is just a module containting builtin applications. For third party binaries, they should be found at /bin/{applicationname}
